@@ -7,14 +7,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:todolist/homepage.dart';
-import 'package:todolist/main.dart';
+import 'package:todolist/model/item.dart';
 import 'package:todolist/screen/completed_note_screen.dart';
 
 void main() {
   testWidgets('Completed note screen widget test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(CompletedNoteScreen());
+    await tester.pumpWidget(CompletedNoteScreen(items: [
+    Item(content: "Tẩy trang"),
+    Item(content: "Srm"),
+    Item(content: "Kẻ mắt"),
+    Item(content: "Toner"),
+    Item(content: "Xịt khoáng")],));
 
     expect(find.byElementType(ListView), findsOneWidget);
   });

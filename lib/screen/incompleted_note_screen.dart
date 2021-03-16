@@ -23,7 +23,7 @@ class _IncompletedNoteScreenState extends State<IncompletedNoteScreen> {
     );
   }
 
-  Widget buildCheckboxListTile(@required Item item) {
+  Widget buildCheckboxListTile(Item item) {
     return CheckboxListTile(
       value: item.value,
       onChanged: (value) {

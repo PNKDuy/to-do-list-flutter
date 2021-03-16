@@ -8,7 +8,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:todolist/homepage.dart';
-import 'package:todolist/main.dart';
 
 void main() {
   testWidgets('Home page test', (WidgetTester tester) async {
