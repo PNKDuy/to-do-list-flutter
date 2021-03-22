@@ -4,6 +4,7 @@ import 'package:todolist/screen/incompleted_note_screen.dart';
 import 'package:todolist/screen/all_note_screen.dart';
 import 'package:todolist/model/item.dart';
 
+// ignore: must_be_immutable
 class HomePage extends StatefulWidget {
   static List<Item> items = [
     Item(content: "Tẩy trang"),
@@ -24,6 +25,21 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  Future<String> createAlertDialog (BuildContext context){
+    TextEditingController textEditingController = TextEditingController();
+
+    return showDialog(context: context, builder: (context) {
+      return AlertDialog(
+        content: TextField(
+          controller: textEditingController,
+        ),
+        actions: [
+          FlatButton(onPressed: () {
+            Navigator.of(context).pop(textEditingController.text.toString());          }, child: Text("Add"))
+        ],
+      );
+    });
+  }
 
   int _currentIndex = 0;
 
@@ -40,9 +56,9 @@ class _HomePageState extends State<HomePage> {
         body: widget.tabs[_currentIndex],
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
-          onPressed: (){}
-        //     );
-          // },
+          onPressed: (){
+              createAlertDialog(context);
+          }
           ),
       bottomNavigationBar: buildBottomNavigationBar(),
     );
