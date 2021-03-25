@@ -25,9 +25,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  Future<String> createAlertDialog (BuildContext context){
+  Future<List<Item>> createAlertDialog (BuildContext context){
     TextEditingController textEditingController = TextEditingController();
-
+    List<Item> items = HomePage.items;
     return showDialog(context: context, builder: (context) {
       return AlertDialog(
         content: TextField(
@@ -35,7 +35,12 @@ class _HomePageState extends State<HomePage> {
         ),
         actions: [
           FlatButton(onPressed: () {
-            Navigator.of(context).pop(textEditingController.text.toString());          }, child: Text("Add"))
+            // Navigator.of(context).pop(textEditin9gController.text.toString());        
+              String newContent = textEditingController.text.toString();
+                items = createItem(items, newContent);
+              Navigator.of(context).pop(items);
+            }
+            , child: Text("Add"))
         ],
       );
     });
@@ -43,24 +48,35 @@ class _HomePageState extends State<HomePage> {
 
   int _currentIndex = 0;
 
+  List<Item> createItem(List<Item> items, String content) {
+    items.add(Item(content: content, value: false));
+    return items;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.yellow[200],
-        appBar: AppBar(
-          title: Text('To do thangs',
-          style: TextStyle(color: Colors.black),
+    return SafeArea(
+          child: Scaffold(
+        backgroundColor: Colors.yellow[200],
+          appBar: AppBar(
+            title: Text('To do thangs',
+            style: TextStyle(color: Colors.black),
+            ),
+            backgroundColor:  Colors.yellow[300],
           ),
-          backgroundColor:  Colors.yellow[300],
-        ),
-        body: widget.tabs[_currentIndex],
-        floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
-          onPressed: (){
-              createAlertDialog(context);
-          }
-          ),
-      bottomNavigationBar: buildBottomNavigationBar(),
+          body: widget.tabs[_currentIndex],
+          floatingActionButton: FloatingActionButton(
+            child: const Icon(Icons.add),
+            onPressed: () {
+                createAlertDialog(context).then((value) {
+                  setState(() {
+                    HomePage.items = value;
+                  });
+                });
+            }
+            ),
+        bottomNavigationBar: buildBottomNavigationBar(),
+      ),
     );
   }
 
